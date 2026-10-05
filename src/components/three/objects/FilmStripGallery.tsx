@@ -58,17 +58,18 @@ function usePosterTextures() {
 
   useEffect(() => {
     let cancelled = false;
-    const made: THREE.CanvasTexture[] = [];
-    void Promise.all(urls.map((u) => rasterize(u).then((t) => made.push(t)))).then(() => {
+    let currentMade: THREE.CanvasTexture[] | null = null;
+    void Promise.all(urls.map((u) => rasterize(u))).then((made) => {
       if (cancelled) {
         made.forEach((t) => t.dispose());
         return;
       }
+      currentMade = made;
       setTextures(made);
     });
     return () => {
       cancelled = true;
-      made.forEach((t) => t.dispose());
+      currentMade?.forEach((t) => t.dispose());
     };
   }, [urls]);
 

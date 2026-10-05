@@ -56,7 +56,6 @@ export default function SceneContents() {
         }}
       />
       <QualityDpr />
-      <InvalidateOnActivity />
       <CinematicRig />
       <Environment resolution={128} frames={1}>
         <Lightformer intensity={3.2} position={[0, 5, 0]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} color="#f2f0ea" />
@@ -94,48 +93,7 @@ function QualityDpr() {
   return null;
 }
 
-/**
- * Demand-frameloop driver — motion-gated: frames are drawn only within
- * MOTION_WINDOW_MS of real activity (pointer, scroll, keys, scene-store
- * writes), plus the tab must be visible and no modal may own the viewport.
- * Idle moments freeze on the last frame, so the GPU rests between interactions.
- */
-function InvalidateOnActivity() {
-  const invalidate = useThree((s) => s.invalidate);
 
-  useEffect(() => {
-    let raf = 0;
-    let running = !document.hidden;
-
-    const loop = () => {
-      if (!running) return;
-      const paused = useSceneStore.getState().paused;
-      if (!paused) invalidate();
-      raf = requestAnimationFrame(loop);
-    };
-
-    const onVisibility = () => {
-      const next = !document.hidden;
-      if (next && !running) {
-        running = true;
-        raf = requestAnimationFrame(loop);
-      } else if (!next) {
-        running = false;
-        cancelAnimationFrame(raf);
-      }
-    };
-
-    document.addEventListener("visibilitychange", onVisibility);
-    raf = requestAnimationFrame(loop);
-
-    return () => {
-      running = false;
-      cancelAnimationFrame(raf);
-      document.removeEventListener("visibilitychange", onVisibility);
-    };
-  }, [invalidate]);
-  return null;
-}
 
 /**
  * The camera rig: one hero object (the cinema camera) that glides between
