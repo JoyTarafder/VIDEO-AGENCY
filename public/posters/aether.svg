@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="58%" cy="45%" r="80%">
+      <stop offset="0%" stop-color="#101726"/>
+      <stop offset="55%" stop-color="#090d18"/>
+      <stop offset="100%" stop-color="#04050a"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="38%" cy="32%" r="75%">
+      <stop offset="0%" stop-color="#cfe6ff"/>
+      <stop offset="28%" stop-color="#6f9fd8"/>
+      <stop offset="62%" stop-color="#1c2f55"/>
+      <stop offset="100%" stop-color="#070b16"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c8ff2e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#c8ff2e" stop-opacity="0.1"/>
+    </linearGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- chrome headphone orb -->
+  <circle cx="1020" cy="430" r="280" fill="url(#orb)"/>
+  <ellipse cx="1020" cy="430" rx="280" ry="90" fill="none" stroke="url(#ring)" stroke-width="10" transform="rotate(-18 1020 430)"/>
+  <ellipse cx="1020" cy="430" rx="330" ry="112" fill="none" stroke="#f2f0ea" stroke-opacity="0.15" stroke-width="2" transform="rotate(-18 1020 430)"/>
+  <ellipse cx="925" cy="330" rx="70" ry="42" fill="#f2f0ea" opacity="0.35"/>
+
+  <text x="60" y="190" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="140" letter-spacing="4" fill="#f2f0ea">AETHER</text>
+  <text x="64" y="248" font-family="Courier New, monospace" font-size="30" letter-spacing="14" fill="#c8ff2e">SOUND — MADE VISIBLE</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">AETHER AUDIO — FULL CGI FILM — 2024</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 1:45</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.07"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

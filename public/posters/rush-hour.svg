@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#160604"/>
+      <stop offset="100%" stop-color="#060202"/>
+    </linearGradient>
+    <linearGradient id="speed" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#ff5a2e" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ff5a2e" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ff5a2e" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- speed lines -->
+  <g transform="rotate(-14 800 450)">
+    <rect x="-100" y="240" width="1800" height="8" fill="url(#speed)"/>
+    <rect x="-100" y="300" width="1800" height="4" fill="url(#speed)" opacity="0.7"/>
+    <rect x="-100" y="380" width="1800" height="14" fill="url(#speed)"/>
+    <rect x="-100" y="470" width="1800" height="5" fill="url(#speed)" opacity="0.8"/>
+    <rect x="-100" y="540" width="1800" height="10" fill="url(#speed)" opacity="0.6"/>
+    <rect x="-100" y="620" width="1800" height="4" fill="url(#speed)" opacity="0.5"/>
+    <rect x="-100" y="680" width="1800" height="12" fill="url(#speed)" opacity="0.9"/>
+  </g>
+
+  <!-- can silhouette -->
+  <g transform="rotate(-14 800 450)">
+    <rect x="680" y="330" width="230" height="330" rx="42" fill="#0d0d0f" stroke="#f2f0ea" stroke-opacity="0.5" stroke-width="4"/>
+    <rect x="680" y="330" width="230" height="70" rx="34" fill="#1c1c20"/>
+    <text x="795" y="520" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="58" fill="#ff5a2e" transform="rotate(-90 795 505)">HYPERLITE</text>
+  </g>
+
+  <text x="60" y="200" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="120" letter-spacing="2" fill="#f2f0ea">RUSH</text>
+  <text x="60" y="316" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="120" letter-spacing="2" fill="none" stroke="#ff5a2e" stroke-width="2.5">HOUR</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">HYPERLITE — COMMERCIAL — 2024</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 0:30</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.07"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

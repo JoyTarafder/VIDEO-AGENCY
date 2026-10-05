@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="62%" cy="40%" r="85%">
+      <stop offset="0%" stop-color="#181a12"/>
+      <stop offset="45%" stop-color="#0d0e0a"/>
+      <stop offset="100%" stop-color="#050505"/>
+    </radialGradient>
+    <linearGradient id="arc" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#c8ff2e"/>
+      <stop offset="100%" stop-color="#3d5500"/>
+    </linearGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="75%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- faint lens rings, no typography — the headline owns this frame -->
+  <circle cx="1050" cy="420" r="330" fill="none" stroke="url(#arc)" stroke-width="2" opacity="0.45"/>
+  <circle cx="1050" cy="420" r="270" fill="none" stroke="#f2f0ea" stroke-opacity="0.07" stroke-width="1.5"/>
+  <circle cx="1050" cy="420" r="395" fill="none" stroke="#f2f0ea" stroke-opacity="0.05" stroke-width="1"/>
+  <line x1="1050" y1="90" x2="1050" y2="140" stroke="#f2f0ea" stroke-opacity="0.2" stroke-width="1.5"/>
+  <line x1="1050" y1="700" x2="1050" y2="750" stroke="#f2f0ea" stroke-opacity="0.2" stroke-width="1.5"/>
+  <line x1="680" y1="420" x2="730" y2="420" stroke="#f2f0ea" stroke-opacity="0.2" stroke-width="1.5"/>
+  <line x1="1370" y1="420" x2="1420" y2="420" stroke="#f2f0ea" stroke-opacity="0.2" stroke-width="1.5"/>
+
+  <!-- acid horizon sweep -->
+  <rect x="0" y="700" width="1600" height="2" fill="url(#arc)" opacity="0.5"/>
+  <rect x="0" y="702" width="1600" height="60" fill="url(#arc)" opacity="0.06"/>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.08"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#120b06"/>
+      <stop offset="55%" stop-color="#3a1c08"/>
+      <stop offset="72%" stop-color="#b45a14"/>
+      <stop offset="73%" stop-color="#0c0805"/>
+      <stop offset="100%" stop-color="#050403"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd9a0"/>
+      <stop offset="60%" stop-color="#ff9d2e"/>
+      <stop offset="100%" stop-color="#ff9d2e" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <circle cx="1080" cy="450" r="150" fill="url(#sun)" opacity="0.9"/>
+
+  <!-- horizon figures -->
+  <g fill="#050403">
+    <path d="M320 648 l14 -46 8 2 6 -20 8 0 6 18 10 4 12 42 Z"/>
+    <path d="M430 652 l12 -40 10 -2 8 -26 9 0 7 24 11 6 10 38 Z"/>
+    <path d="M560 650 l13 -44 9 0 7 -22 8 0 6 20 12 8 10 40 Z"/>
+  </g>
+  <rect y="648" width="1600" height="252" fill="#050403"/>
+
+  <text x="60" y="180" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="110" letter-spacing="2" fill="#f2f0ea">THE LONG</text>
+  <text x="60" y="285" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="110" letter-spacing="2" fill="none" stroke="#ff9d2e" stroke-width="2.5">GAME</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">ATLAS SPORTSWEAR — BRAND FILM — 2024</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 3:20</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.07"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

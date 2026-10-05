@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0a0714"/>
+      <stop offset="60%" stop-color="#12081f"/>
+      <stop offset="100%" stop-color="#050308"/>
+    </linearGradient>
+    <linearGradient id="streakA" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff2d78" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ff2d78" stop-opacity="0.85"/>
+      <stop offset="100%" stop-color="#ff2d78" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="streakB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2de2ff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#2de2ff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#2de2ff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.6"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- wet-street light streaks -->
+  <rect x="180" y="0" width="26" height="900" fill="url(#streakA)" transform="skewX(-8)"/>
+  <rect x="420" y="0" width="14" height="900" fill="url(#streakB)" transform="skewX(-8)"/>
+  <rect x="640" y="0" width="40" height="900" fill="url(#streakA)" opacity="0.6" transform="skewX(-8)"/>
+  <rect x="900" y="0" width="18" height="900" fill="url(#streakB)" transform="skewX(-8)"/>
+  <rect x="1120" y="0" width="30" height="900" fill="url(#streakA)" opacity="0.8" transform="skewX(-8)"/>
+  <rect x="1380" y="0" width="16" height="900" fill="url(#streakB)" opacity="0.7" transform="skewX(-8)"/>
+
+  <!-- car silhouette -->
+  <path d="M340 690 Q420 610 620 600 L1020 600 Q1260 612 1330 690 L1360 720 Q1360 740 1330 740 L360 740 Q330 740 330 718 Z" fill="#0a0a12" stroke="#2de2ff" stroke-opacity="0.35" stroke-width="2"/>
+  <circle cx="470" cy="742" r="34" fill="#050508" stroke="#f2f0ea" stroke-opacity="0.25" stroke-width="3"/>
+  <circle cx="1200" cy="742" r="34" fill="#050508" stroke="#f2f0ea" stroke-opacity="0.25" stroke-width="3"/>
+  <ellipse cx="365" cy="650" rx="26" ry="10" fill="#ff2d78" opacity="0.9"/>
+  <ellipse cx="1320" cy="650" rx="26" ry="10" fill="#ff2d78" opacity="0.9"/>
+
+  <text x="60" y="180" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="120" letter-spacing="2" fill="#f2f0ea">NEON</text>
+  <text x="60" y="290" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="120" letter-spacing="2" fill="none" stroke="#ff2d78" stroke-width="2.5">DISTRICT</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">VOLTA EV — COMMERCIAL — 2025</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 0:60</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.07"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

@@ -1,0 +1,51 @@
+{
+  "name": "video-agency",
+  "version": "1.0.0",
+  "private": true,
+  "description": "VIDEO AGENCY — cinematic film & video production agency site. Next.js App Router, R3F, GSAP, Lenis, MongoDB.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "dependencies": {
+    "@gsap/react": "^2.1.2",
+    "@react-three/drei": "^10.4.0",
+    "@react-three/fiber": "^9.3.0",
+    "@react-three/postprocessing": "^3.1.3",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.0.0",
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.4",
+    "mongoose": "^8.0.0",
+    "next": "^15.5.4",
+    "nodemailer": "^10.0.14",
+    "postprocessing": "^6.39.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "tailwind-merge": "^3.3.0",
+    "three": "^0.180.0",
+    "zod": "^3.25.0",
+    "zustand": "^5.0.15"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
+    "@tailwindcss/postcss": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/nodemailer": "^8.0.2",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/three": "^0.180.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.5.4",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.8.0",
+    "vitest": "^4.1.11"
+  }
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#241a12"/>
+      <stop offset="55%" stop-color="#3a2a1c"/>
+      <stop offset="100%" stop-color="#120c08"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="42%" cy="38%" r="60%">
+      <stop offset="0%" stop-color="#ffe8c8" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#ffe8c8" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="75%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#glow)"/>
+
+  <!-- coffee cup top-down -->
+  <circle cx="1050" cy="430" r="240" fill="#171009" stroke="#f2f0ea" stroke-opacity="0.18" stroke-width="2"/>
+  <circle cx="1050" cy="430" r="210" fill="#241608"/>
+  <circle cx="1050" cy="430" r="150" fill="#3a2510"/>
+  <ellipse cx="1010" cy="380" rx="70" ry="46" fill="#5a3c1c" opacity="0.7"/>
+  <path d="M1290 430 a240 240 0 0 1 -68 168" fill="none" stroke="#f2f0ea" stroke-opacity="0.25" stroke-width="16"/>
+
+  <!-- steam curls -->
+  <path d="M700 300 q30 -50 0 -100 q-30 -50 0 -100" fill="none" stroke="#f2f0ea" stroke-opacity="0.3" stroke-width="5" stroke-linecap="round"/>
+  <path d="M780 330 q30 -50 0 -100 q-30 -50 0 -100" fill="none" stroke="#f2f0ea" stroke-opacity="0.2" stroke-width="5" stroke-linecap="round"/>
+
+  <text x="60" y="200" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="110" letter-spacing="2" fill="#f2f0ea">SLOW</text>
+  <text x="60" y="308" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="110" letter-spacing="2" fill="none" stroke="#e8b878" stroke-width="2.5">MORNINGS</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">KŌJI COFFEE — SOCIAL SYSTEM — 2025</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 0:15</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.08"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

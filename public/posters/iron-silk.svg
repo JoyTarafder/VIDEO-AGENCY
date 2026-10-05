@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="55%" cy="50%" r="80%">
+      <stop offset="0%" stop-color="#1c1d1f"/>
+      <stop offset="60%" stop-color="#0e0f11"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </radialGradient>
+    <linearGradient id="steel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#e8e9ec"/>
+      <stop offset="45%" stop-color="#8b8f96"/>
+      <stop offset="100%" stop-color="#3a3d43"/>
+    </linearGradient>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- macro watch mechanism -->
+  <circle cx="1000" cy="450" r="300" fill="none" stroke="url(#steel)" stroke-width="26" opacity="0.9"/>
+  <circle cx="1000" cy="450" r="240" fill="none" stroke="#5b5f66" stroke-width="10"/>
+  <circle cx="1000" cy="450" r="180" fill="#101114" stroke="#7d828b" stroke-width="6"/>
+  <g stroke="url(#steel)" stroke-width="8" opacity="0.85">
+    <line x1="1000" y1="450" x2="1000" y2="290"/>
+    <line x1="1000" y1="450" x2="1120" y2="530"/>
+    <line x1="1000" y1="450" x2="890" y2="560"/>
+  </g>
+  <circle cx="1000" cy="450" r="22" fill="#c8ff2e"/>
+  <g fill="#7d828b">
+    <circle cx="1000" cy="230" r="12"/><circle cx="1170" cy="345" r="10"/><circle cx="1170" cy="555" r="10"/>
+    <circle cx="1000" cy="670" r="12"/><circle cx="830" cy="555" r="10"/><circle cx="830" cy="345" r="10"/>
+  </g>
+
+  <text x="60" y="200" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="110" letter-spacing="2" fill="#f2f0ea">IRON</text>
+  <text x="60" y="306" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="110" letter-spacing="2" fill="none" stroke="#aab0b9" stroke-width="2.5">&amp; SILK</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">NORDWIND WATCHES — BRAND FILM — 2023</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 2:10</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.07"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>

@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+/* ── Design tokens — "Signal Acid on Cinema Black" ─────────────────────────── */
+@theme {
+  --color-ink: #0a0a0a;
+  --color-coal: #131312;
+  --color-smoke: #1c1c1a;
+  --color-paper: #f2f0ea;
+  --color-fog: #8f8e88;
+  --color-acid: #c8ff2e;
+  --color-rec: #ff3b30;
+  --color-line: rgba(242, 240, 234, 0.14);
+
+  --font-display: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-mono-va), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --animate-marquee: marquee 42s linear infinite;
+  --animate-marquee-slow: marquee 80s linear infinite;
+  --animate-blink: blink 1.4s steps(1) infinite;
+  --animate-spin-slower: spin 16s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+}
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    color-scheme: dark;
+  }
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none !important;
+  }
+  /* Keep native affordances for text entry — the custom cursor still shows. */
+  html.has-cursor input,
+  html.has-cursor textarea,
+  html.has-cursor select {
+    cursor: auto !important;
+  }
+  body {
+    @apply bg-ink font-body text-paper antialiased;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--color-acid);
+    color: var(--color-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-acid);
+    outline-offset: 3px;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a28;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-ink);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ── Keyframes used via arbitrary animate-[…] utilities ────────────────────── */
+@keyframes grain-shift {
+  0%, 100% { background-position: 0 0; }
+  20% { background-position: -60px 90px; }
+  40% { background-position: 90px -60px; }
+  60% { background-position: -90px -90px; }
+  80% { background-position: 60px 60px; }
+}
+
+/* Slow drift for posters standing in for video previews */
+@keyframes ken-burns {
+  from { transform: scale(1) translate(0, 0); }
+  to { transform: scale(1.12) translate(-2%, 1.5%); }
+}
+
+/* ── Custom utilities ──────────────────────────────────────────────────────── */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px color-mix(in srgb, var(--color-paper) 80%, transparent);
+}
+
+@utility text-outline-acid {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-acid);
+}
+
+/* Text/interactive content always paints ABOVE the fixed WebGL layer (z-20). */
+@utility z-content {
+  position: relative;
+  z-index: 30;
+}
+
+@utility grain-bg {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+  background-size: 240px 240px;
+}
+
+/* Chromatic "distortion" applied to media cards on hover (GPU-cheap film glitch) */
+@utility glitch {
+  filter: saturate(1.25) contrast(1.08) url(#va-chromatic);
+}
+
+/* ── Custom cursor ─────────────────────────────────────────────────────────── */
+@layer components {
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    pointer-events: none;
+    border-radius: 9999px;
+    will-change: transform;
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    background: var(--color-acid);
+  }
+  .cursor-ring {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    margin: -18px 0 0 -18px;
+    border: 1px solid color-mix(in srgb, var(--color-paper) 55%, transparent);
+    transition: width 0.35s var(--tw-duration, 0.35s), height 0.35s, margin 0.35s, background-color 0.35s, border-color 0.35s;
+  }
+  .cursor-ring[data-label] {
+    width: 88px;
+    height: 88px;
+    margin: -44px 0 0 -44px;
+    background: var(--color-acid);
+    border-color: transparent;
+  }
+  .cursor-ring[data-label] .cursor-label {
+    opacity: 1;
+  }
+  .cursor-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--color-ink);
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  html.has-cursor .cursor-dot,
+  html.has-cursor .cursor-ring {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#06110f"/>
+      <stop offset="100%" stop-color="#030807"/>
+    </linearGradient>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+      <circle cx="40" cy="40" r="2.5" fill="#2ea88f"/>
+    </pattern>
+    <filter id="g"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect width="1600" height="900" fill="url(#grid)" opacity="0.7"/>
+
+  <!-- data terrain wireframe -->
+  <g fill="none" stroke="#2ea88f" opacity="0.85">
+    <path d="M0 640 L200 600 L400 660 L600 560 L800 620 L1000 520 L1200 600 L1400 540 L1600 590" stroke-width="4"/>
+    <path d="M0 700 L200 660 L400 715 L600 630 L800 685 L1000 590 L1200 665 L1400 605 L1600 655" stroke-width="3" opacity="0.7"/>
+    <path d="M0 760 L200 725 L400 770 L600 700 L800 748 L1000 665 L1200 728 L1400 672 L1600 718" stroke-width="2" opacity="0.5"/>
+    <path d="M0 580 L200 545 L400 600 L600 495 L800 560 L1000 455 L1200 535 L1400 478 L1600 528" stroke-width="5" opacity="0.9"/>
+  </g>
+  <g fill="#c8ff2e">
+    <circle cx="600" cy="495" r="9"/>
+    <circle cx="1000" cy="455" r="9"/>
+    <circle cx="1400" cy="478" r="7"/>
+  </g>
+
+  <text x="60" y="190" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="96" letter-spacing="2" fill="#f2f0ea">FIELDS</text>
+  <text x="60" y="286" font-family="Arial Black, Arial, sans-serif" font-weight="900" font-size="96" letter-spacing="2" fill="none" stroke="#2ea88f" stroke-width="2.5">OF DATA</text>
+
+  <text x="60" y="812" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">VIREO CLOUD — SOCIAL SERIES — 2023</text>
+  <text x="1540" y="812" text-anchor="end" font-family="Courier New, monospace" font-size="26" letter-spacing="6" fill="#8f8e88">TRT 1:30</text>
+
+  <rect width="1600" height="900" fill="url(#vig)"/>
+  <rect width="1600" height="900" filter="url(#g)" opacity="0.07"/>
+  <rect width="1600" height="64" fill="#050505"/>
+  <rect y="836" width="1600" height="64" fill="#050505"/>
+</svg>
