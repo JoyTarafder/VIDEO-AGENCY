@@ -30,14 +30,17 @@ export const SHOTS: Record<string, Shot> = {
     cam: [0.35, 0.1, 7.1], look: [0, 0, 0], obj: [2.5, 0.05, -0.5],
     scale: 0.8, tint: "#dcff8a", glow: 0.35,
   },
-  // Parked shots — Steps B/C/D replace these with themed treatments.
+  // Services: the active row's object (mini camera / chair / phone /
+  // keyframes+zoetrope / wireframe) parks in the right gutter and swaps per row.
   services: {
-    cam: [-0.35, 0, 7.3], look: [0, 0, 0], obj: [-4.1, 1.1, -1.6],
-    scale: 0.42, tint: "#c8ff2e", glow: 0.3,
+    cam: [-0.35, 0, 7.3], look: [0, 0, 0], obj: [3.05, 0.1, -1.2],
+    scale: 0.95, tint: "#c8ff2e", glow: 0.3,
   },
+  // Work: the curved film-strip gallery rolls behind the cards (they paint
+  // above the canvas), peeking through the grid gaps and the heading zone.
   work: {
-    cam: [0, 0.15, 7.5], look: [0, 0, 0], obj: [4.3, 2.7, -2.2],
-    scale: 0.38, tint: "#c8ff2e", glow: 0.28,
+    cam: [0, 0.15, 7.5], look: [0, 0, 0], obj: [0.5, 0.85, -2],
+    scale: 0.78, tint: "#c8ff2e", glow: 0.26,
   },
   process: {
     cam: [0, 0, 7.2], look: [0, 0, 0], obj: [0, -5.2, -1.5],

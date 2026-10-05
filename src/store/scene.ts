@@ -12,6 +12,8 @@ type SceneState = {
   quality: QualityTier;
   /** true while a full-screen modal owns the viewport — the canvas stops rendering */
   paused: boolean;
+  /** index of the active service row (0-4) — drives the services 3D object swap */
+  activeService: number;
   setQuality: (q: QualityTier) => void;
   setPaused: (p: boolean) => void;
 };
@@ -27,6 +29,12 @@ export const useSceneStore = create<SceneState>((set) => ({
   progress: {},
   quality: 2,
   paused: false,
+  activeService: 0,
   setQuality: (quality) => set({ quality }),
   setPaused: (paused) => set({ paused }),
 }));
+
+// DevTools debug handle: `__vaScene.getState()` in the browser console.
+if (typeof window !== "undefined") {
+  (window as unknown as Record<string, unknown>).__vaScene = useSceneStore;
+}

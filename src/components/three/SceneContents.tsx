@@ -2,7 +2,7 @@
 
 import { Environment, Float, Lightformer, PerformanceMonitor, Sparkles } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, Suspense } from "react";
 import * as THREE from "three";
 import { useSceneStore, type QualityTier } from "@/store/scene";
 import { clamp, lerp } from "@/lib/utils";
@@ -11,6 +11,8 @@ import { getShot, SHOTS } from "./shots";
 import { Effects } from "./Effects";
 import { CinemaCamera } from "./objects/CinemaCamera";
 import { IntroScene } from "./objects/IntroScene";
+import { ServicesScene } from "./objects/ServicesScene";
+import { FilmStripGallery } from "./objects/FilmStripGallery";
 import { makeRadialTexture } from "./textures";
 
 /* Particle budget per quality tier. */
@@ -165,6 +167,8 @@ function CinematicRig() {
   const heroGroup = useRef<THREE.Group>(null); // cinema camera — hero section
   const heroExit = useRef<THREE.Group>(null); // hero camera's own exit path
   const introGroup = useRef<THREE.Group>(null); // clapper + film frames — intro section
+  const servicesGroup = useRef<THREE.Group>(null); // per-service objects
+  const workGroup = useRef<THREE.Group>(null); // curved film-strip gallery
   const glow = useRef<THREE.Mesh>(null);
   const keyLight = useRef<THREE.PointLight>(null);
 
@@ -263,6 +267,8 @@ function CinematicRig() {
       introGroup.current.visible =
         active === "intro" || (active === "hero" && introProg > 0.06);
     }
+    if (servicesGroup.current) servicesGroup.current.visible = active === "services";
+    if (workGroup.current) workGroup.current.visible = active === "work";
     // Sections without a built scene yet keep everything hidden (ambient only).
   });
 
@@ -279,6 +285,14 @@ function CinematicRig() {
             <group ref={introGroup} visible={false}>
               <IntroScene />
             </group>
+            <group ref={servicesGroup} visible={false}>
+              <ServicesScene />
+            </group>
+            <Suspense fallback={null}>
+              <group ref={workGroup} visible={false}>
+                <FilmStripGallery />
+              </group>
+            </Suspense>
           </group>
         </Float>
 

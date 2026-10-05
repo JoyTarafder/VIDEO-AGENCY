@@ -1,9 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { TransitionLink } from "@/components/layout/TransitionProvider";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { useFinePointer } from "@/hooks/use-media";
+import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { useSceneStore } from "@/store/scene";
 import { services } from "@/content/services";
 import { ArrowUpRight } from "@/components/ui/Button";
 import { Reveal } from "@/components/ui/Motion";
@@ -17,6 +19,26 @@ export function ServicesPreview() {
   const fine = useFinePointer();
   const [preview, setPreview] = useState<string | null>(null);
   const previewRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
+
+  // Sync the 3D services object with the row in view (hover overrides below).
+  useEffect(() => {
+    const rows = Array.from(rootRef.current?.querySelectorAll<HTMLElement>("[data-service-row]") ?? []);
+    if (rows.length === 0) return;
+    const ctx = gsap.context(() => {
+      rows.forEach((row, i) => {
+        ScrollTrigger.create({
+          trigger: row,
+          start: "top 65%",
+          end: "bottom 35%",
+          onToggle: (self) => {
+            if (self.isActive) useSceneStore.setState({ activeService: i });
+          },
+        });
+      });
+    });
+    return () => ctx.revert();
+  }, []);
 
   const onMove = (e: React.MouseEvent) => {
     const el = previewRef.current;
@@ -26,6 +48,7 @@ export function ServicesPreview() {
 
   return (
     <section
+      ref={rootRef}
       className="relative px-6 py-28 md:px-10 md:py-40"
       aria-label="Services"
       data-scene="services"
@@ -41,11 +64,14 @@ export function ServicesPreview() {
       <ul className="border-t border-line">
         {services.map((s, i) => (
           <Reveal key={s.id} delay={i * 0.04}>
-            <li className="border-b border-line">
+            <li className="border-b border-line" data-service-row={i}>
               <TransitionLink
                 href={`/services#${s.id}`}
                 className="group flex items-center gap-6 py-7 transition-colors duration-300 hover:bg-coal/60 md:gap-10 md:py-9"
-                onMouseEnter={() => fine && setPreview(s.poster)}
+                onMouseEnter={() => {
+                  if (fine) setPreview(s.poster);
+                  useSceneStore.setState({ activeService: i });
+                }}
                 onMouseLeave={() => setPreview(null)}
               >
                 <span className="w-10 shrink-0 font-mono text-xs text-acid md:text-sm">
