@@ -64,13 +64,22 @@ export function CustomCursor() {
     };
 
     const loop = () => {
-      rx = lerp(rx, x, 0.18);
-      ry = lerp(ry, y, 0.18);
+      rx = lerp(rx, x, 0.2);
+      ry = lerp(ry, y, 0.2);
       ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+      // Sleep once caught up — wakes again on the next mousemove.
+      if (Math.abs(rx - x) < 0.1 && Math.abs(ry - y) < 0.1) {
+        raf = 0;
+        return;
+      }
       raf = requestAnimationFrame(loop);
+    };
+    const wake = () => {
+      if (!raf) raf = requestAnimationFrame(loop);
     };
 
     window.addEventListener("mousemove", onMove, { passive: true });
+    window.addEventListener("mousemove", wake, { passive: true });
     window.addEventListener("mouseover", onOver, { passive: true });
     document.documentElement.addEventListener("mouseleave", onLeave);
     raf = requestAnimationFrame(loop);
@@ -78,6 +87,7 @@ export function CustomCursor() {
     return () => {
       document.documentElement.classList.remove("has-cursor");
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousemove", wake);
       window.removeEventListener("mouseover", onOver);
       document.documentElement.removeEventListener("mouseleave", onLeave);
       cancelAnimationFrame(raf);

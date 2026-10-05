@@ -2,7 +2,7 @@
 
 import { Environment, Float, Lightformer, PerformanceMonitor, Sparkles } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useMemo, useRef, Suspense } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import { useSceneStore, type QualityTier } from "@/store/scene";
 import { clamp, lerp } from "@/lib/utils";
@@ -15,9 +15,8 @@ import { ServicesScene } from "./objects/ServicesScene";
 import { FilmStripGallery } from "./objects/FilmStripGallery";
 import { makeRadialTexture } from "./textures";
 
-/* Particle budget per quality tier. */
-const PARTICLES = [260, 600, 1000];
-const DPR_BY_TIER: Record<QualityTier, number> = { 0: 1, 1: 1.25, 2: 1.5 };
+const PARTICLES = [120, 240, 400];
+const DPR_BY_TIER: Record<QualityTier, number> = { 0: 1, 1: 1, 2: 1 };
 
 const colorCache = new Map<string, THREE.Color>();
 function shotColor(hex: string): THREE.Color {
@@ -59,7 +58,7 @@ export default function SceneContents() {
       <QualityDpr />
       <InvalidateOnActivity />
       <CinematicRig />
-      <Environment resolution={256}>
+      <Environment resolution={128} frames={1}>
         <Lightformer intensity={3.2} position={[0, 5, 0]} rotation-x={Math.PI / 2} scale={[10, 10, 1]} color="#f2f0ea" />
         <Lightformer intensity={6} position={[-5, 0, -1]} rotation-y={Math.PI / 2} scale={[6, 2, 1]} color="#c8ff2e" />
         <Lightformer intensity={2.6} position={[5, 1, -1]} rotation-y={-Math.PI / 2} scale={[6, 2, 1]} color="#ffffff" />
@@ -67,7 +66,8 @@ export default function SceneContents() {
       </Environment>
       <ambientLight intensity={0.2} />
       <ParticleField count={PARTICLES[quality]} />
-      <Effects enabled={quality >= 1} />
+      {/* Tier 2: bloom + chromatic aberration. Tier 1: bloom only. */}
+      <Effects tier={quality} />
     </>
   );
 }
@@ -77,7 +77,9 @@ function ParticleField({ count }: { count: number }) {
   return (
     <>
       <Sparkles count={count} scale={[11, 7, 5]} size={1.8} speed={0.3} opacity={0.35} color="#c8ff2e" />
-      <Sparkles count={Math.round(count * 0.55)} scale={[13, 8, 6]} size={1.1} speed={0.18} opacity={0.2} color="#f2f0ea" />
+      {count > 150 && (
+        <Sparkles count={Math.round(count * 0.55)} scale={[13, 8, 6]} size={1.1} speed={0.18} opacity={0.2} color="#f2f0ea" />
+      )}
     </>
   );
 }
@@ -93,9 +95,10 @@ function QualityDpr() {
 }
 
 /**
- * Demand-frameloop driver: schedules frames while there is something worth
- * drawing — pauses when the tab is hidden, when a full-screen modal owns the
- * viewport, and after 6s of no user activity (any input or scroll resumes).
+ * Demand-frameloop driver — motion-gated: frames are drawn only within
+ * MOTION_WINDOW_MS of real activity (pointer, scroll, keys, scene-store
+ * writes), plus the tab must be visible and no modal may own the viewport.
+ * Idle moments freeze on the last frame, so the GPU rests between interactions.
  */
 function InvalidateOnActivity() {
   const invalidate = useThree((s) => s.invalidate);
@@ -103,18 +106,11 @@ function InvalidateOnActivity() {
   useEffect(() => {
     let raf = 0;
     let running = !document.hidden;
-    let lastActivity = Date.now();
-    const IDLE_MS = 6_000;
-
-    const touch = () => {
-      lastActivity = Date.now();
-    };
 
     const loop = () => {
       if (!running) return;
-      const idle = Date.now() - lastActivity > IDLE_MS;
       const paused = useSceneStore.getState().paused;
-      if (!idle && !paused) invalidate();
+      if (!paused) invalidate();
       raf = requestAnimationFrame(loop);
     };
 
@@ -129,25 +125,12 @@ function InvalidateOnActivity() {
       }
     };
 
-    window.addEventListener("pointermove", touch, { passive: true });
-    window.addEventListener("pointerdown", touch, { passive: true });
-    window.addEventListener("keydown", touch, { passive: true });
-    window.addEventListener("scroll", touch, { passive: true });
-    window.addEventListener("wheel", touch, { passive: true });
-    // Store writes (section changes) count as activity too.
-    const unsubscribe = useSceneStore.subscribe(touch);
     document.addEventListener("visibilitychange", onVisibility);
     raf = requestAnimationFrame(loop);
 
     return () => {
       running = false;
       cancelAnimationFrame(raf);
-      window.removeEventListener("pointermove", touch);
-      window.removeEventListener("pointerdown", touch);
-      window.removeEventListener("keydown", touch);
-      window.removeEventListener("scroll", touch);
-      window.removeEventListener("wheel", touch);
-      unsubscribe();
       document.removeEventListener("visibilitychange", onVisibility);
     };
   }, [invalidate]);
@@ -182,6 +165,16 @@ function CinematicRig() {
   });
 
   const glowTex = useMemo(() => makeRadialTexture(), []);
+  // Scratch objects reused every frame — no per-frame allocations / GC hitches.
+  const scratch = useMemo(
+    () => ({
+      camT: new THREE.Vector3(),
+      lookT: new THREE.Vector3(),
+      objT: new THREE.Vector3(),
+      tintT: new THREE.Color(),
+    }),
+    []
+  );
 
   useEffect(() => () => glowTex.dispose(), [glowTex]);
 
@@ -199,20 +192,22 @@ function CinematicRig() {
     const blend = heroPair ? clamp(s.progress[active] ?? 1, 0, 1) : 1;
 
     const t = cur.current;
-    const k = 1 - Math.pow(0.0016, Math.min(dt, 0.1)); // smoothing factor
+    // Snappy glide: converges ~95% in under a second, so quick scroll flicks
+    // still land the object on its mark before the render window closes.
+    const k = 1 - Math.pow(0.0002, Math.min(dt, 0.1));
 
     // ── targets ──────────────────────────────────────────────────────────
-    const camT = new THREE.Vector3(
+    const camT = scratch.camT.set(
       lerp(from.cam[0], to.cam[0], blend) + pointer.x * 0.14,
       lerp(from.cam[1], to.cam[1], blend) - pointer.y * 0.1,
       lerp(from.cam[2], to.cam[2], blend)
     );
-    const lookT = new THREE.Vector3(
+    const lookT = scratch.lookT.set(
       lerp(from.look[0], to.look[0], blend),
       lerp(from.look[1], to.look[1], blend),
       lerp(from.look[2], to.look[2], blend)
     );
-    const objT = new THREE.Vector3(
+    const objT = scratch.objT.set(
       lerp(from.obj[0], to.obj[0], blend),
       lerp(from.obj[1], to.obj[1], blend),
       lerp(from.obj[2], to.obj[2], blend)
@@ -240,7 +235,7 @@ function CinematicRig() {
     if (m) m.scale.setScalar(Math.max(0.001, t.scale));
 
     // Grade: key light + glow follow the section tint
-    const tintT = shotColor(from.tint).clone().lerp(shotColor(to.tint), blend);
+    const tintT = scratch.tintT.copy(shotColor(from.tint)).lerp(shotColor(to.tint), blend);
     t.tint.lerp(tintT, k);
     if (keyLight.current) keyLight.current.color.copy(t.tint);
     if (glow.current) {
@@ -288,11 +283,9 @@ function CinematicRig() {
             <group ref={servicesGroup} visible={false}>
               <ServicesScene />
             </group>
-            <Suspense fallback={null}>
-              <group ref={workGroup} visible={false}>
-                <FilmStripGallery />
-              </group>
-            </Suspense>
+            <group ref={workGroup} visible={false}>
+              <FilmStripGallery />
+            </group>
           </group>
         </Float>
 

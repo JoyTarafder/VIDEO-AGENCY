@@ -27,7 +27,8 @@ export const useSceneStore = create<SceneState>((set) => ({
   activeSection: "hero",
   prevSection: "hero",
   progress: {},
-  quality: 2,
+  /** starts conservative — PerformanceMonitor inclines on proven-fast machines */
+  quality: 1,
   paused: false,
   activeService: 0,
   setQuality: (quality) => set({ quality }),

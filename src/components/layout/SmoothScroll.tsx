@@ -21,9 +21,11 @@ export function SmoothScroll({ children }: { children: ReactNode }) {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const instance = new Lenis({
-      duration: 1.15,
+      lerp: 0.1,
       smoothWheel: true,
+      wheelMultiplier: 1,
       touchMultiplier: 1.6,
+      autoRaf: false,
     });
     instance.on("scroll", ScrollTrigger.update);
 

@@ -81,18 +81,20 @@
 }
 
 /* ── Keyframes used via arbitrary animate-[…] utilities ────────────────────── */
-@keyframes grain-shift {
-  0%, 100% { background-position: 0 0; }
-  20% { background-position: -60px 90px; }
-  40% { background-position: 90px -60px; }
-  60% { background-position: -90px -90px; }
-  80% { background-position: 60px 60px; }
-}
 
 /* Slow drift for posters standing in for video previews */
 @keyframes ken-burns {
   from { transform: scale(1) translate(0, 0); }
   to { transform: scale(1.12) translate(-2%, 1.5%); }
+}
+
+/* Film grain flicker — transform-only so it composites on the GPU (no repaint) */
+@keyframes grain-shift {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-30px, 45px); }
+  40% { transform: translate(45px, -30px); }
+  60% { transform: translate(-45px, -45px); }
+  80% { transform: translate(30px, 30px); }
 }
 
 /* ── Custom utilities ──────────────────────────────────────────────────────── */
@@ -117,9 +119,10 @@
   background-size: 240px 240px;
 }
 
-/* Chromatic "distortion" applied to media cards on hover (GPU-cheap film glitch) */
+/* Hover "grade" on media cards. (SVG displacement removed — it re-rasterized
+   the whole image every frame and caused hover jank.) */
 @utility glitch {
-  filter: saturate(1.25) contrast(1.08) url(#va-chromatic);
+  filter: saturate(1.25) contrast(1.08);
 }
 
 /* ── Custom cursor ─────────────────────────────────────────────────────────── */

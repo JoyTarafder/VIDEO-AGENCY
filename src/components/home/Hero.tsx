@@ -35,13 +35,22 @@ export function Hero() {
   const topBarRef = useRef<HTMLDivElement>(null);
   const bottomBarRef = useRef<HTMLDivElement>(null);
   const [videoReady, setVideoReady] = useState(false);
+  const [canAutoplay, setCanAutoplay] = useState(false);
+  const inViewRef = useRef(false);
 
   // Reduced-motion users get the poster, never an autoplaying video.
-  // Everyone else: pause while the hero is off-screen, resume on return.
+  // Everyone else: playback arms only after the page fully loads (so the
+  // remote MP4 never competes with first paint), and plays only while the
+  // hero is on-screen.
   useEffect(() => {
     const video = videoElRef.current;
     const root = rootRef.current;
     if (!video || !root || typeof IntersectionObserver === "undefined") return;
+
+    if (!reduced) {
+      video.play().catch(() => {});
+    }
+
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -50,7 +59,7 @@ export function Hero() {
           video.pause();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.1 }
     );
     io.observe(root);
     return () => io.disconnect();
@@ -126,7 +135,7 @@ export function Hero() {
             muted
             loop
             playsInline
-            preload="metadata"
+            preload={reduced ? "none" : "metadata"}
             poster={showreel.heroPoster}
             src={showreel.src}
             onCanPlay={() => setVideoReady(true)}

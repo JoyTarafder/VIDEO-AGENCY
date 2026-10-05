@@ -18,7 +18,7 @@ export function GrainOverlay() {
       </svg>
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed -inset-[100px] z-[80] grain-bg opacity-[0.05] [animation:grain-shift_1.1s_steps(6)_infinite]"
+        className="pointer-events-none fixed -inset-[100px] z-[80] grain-bg opacity-[0.05] transform-gpu [animation:grain-shift_1.1s_steps(6)_infinite]"
       />
     </>
   );
