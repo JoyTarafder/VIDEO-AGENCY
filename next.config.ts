@@ -33,6 +33,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  poweredByHeader: false,
+  experimental: {
+    optimizePackageImports: ["framer-motion"],
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
